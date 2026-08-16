@@ -1,18 +1,12 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 const client = new Client({ 
     authStrategy: new LocalAuth(),
     puppeteer: { 
-        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-*/chrome-linux64/chrome',
-        args: [
-            '--no-sandbox', 
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-gpu'
-        ]
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
 
@@ -30,16 +24,21 @@ BEI ZETU:
 3. Studio Portrait: 50,000 TZS
 Tuma "BOOK" kupanga`);
     }
+    if (text == 'hi' || text == 'habari') {
+        msg.reply(`Karibu Double Touchez 📸🔥
+Tuma "BEI" kuona bei zetu`);
+    }
 });
 
 app.get("/", (req, res) => res.send("Bot iko hai!"));
-app.listen(PORT);
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 
 client.initialize();
 
+// HII NDIO INATOA PAIRING CODE
 setTimeout(async () => {
     if (!client.info) {
-        const code = await client.requestPairingCode('255650586627'); // WEKA NAMBA YAKO
+        const code = await client.requestPairingCode('255650586627'); // NAMBA YAKO
         console.log('PAIRING CODE YAKO NI: ', code);
     }
 }, 10000);
