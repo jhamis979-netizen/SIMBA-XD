@@ -39,7 +39,7 @@ client.on('disconnected', reason => console.log('DISCONNECTED', reason));
 
 setTimeout(async () => {
     if (!client.info) {
-        const code = await client.requestPairingCode('2557XXXXXXXX'); // WEKA NAMBA YAKO HAPA
+        const code = await client.requestPairingCode('255650586627'); // WEKA NAMBA YAKO HAPA
         console.log('PAIRING CODE YAKO NI: ', code);
     }
 }, 5000);
