@@ -5,7 +5,15 @@ const PORT = process.env.PORT || 3000;
 
 const client = new Client({ 
     authStrategy: new LocalAuth(),
-    puppeteer: { args: ['--no-sandbox', '--disable-setuid-sandbox'] }
+    puppeteer: { 
+        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-*/chrome-linux64/chrome',
+        args: [
+            '--no-sandbox', 
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu'
+        ]
+    }
 });
 
 client.on('ready', () => {
@@ -22,10 +30,6 @@ BEI ZETU:
 3. Studio Portrait: 50,000 TZS
 Tuma "BOOK" kupanga`);
     }
-    if (text == 'hi' || text == 'habari') {
-        msg.reply(`Karibu Double Touchez 📸🔥
-Tuma "BEI" kuona bei zetu`);
-    }
 });
 
 app.get("/", (req, res) => res.send("Bot iko hai!"));
@@ -33,13 +37,9 @@ app.listen(PORT);
 
 client.initialize();
 
-// HII NDIO INATOA PAIRING CODE
-client.on('auth_failure', msg => console.log('AUTH FAILED', msg));
-client.on('disconnected', reason => console.log('DISCONNECTED', reason));
-
 setTimeout(async () => {
     if (!client.info) {
-        const code = await client.requestPairingCode('255650586627'); // WEKA NAMBA YAKO HAPA
+        const code = await client.requestPairingCode('2557XXXXXXXX'); // WEKA NAMBA YAKO
         console.log('PAIRING CODE YAKO NI: ', code);
     }
-}, 5000);
+}, 10000);
