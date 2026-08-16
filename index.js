@@ -39,7 +39,7 @@ client.initialize();
 
 setTimeout(async () => {
     if (!client.info) {
-        const code = await client.requestPairingCode('2557XXXXXXXX'); // WEKA NAMBA YAKO
+        const code = await client.requestPairingCode('255650586627'); // WEKA NAMBA YAKO
         console.log('PAIRING CODE YAKO NI: ', code);
     }
 }, 10000);
