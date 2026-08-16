@@ -1,5 +1,4 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -7,11 +6,6 @@ const PORT = process.env.PORT || 3000;
 const client = new Client({ 
     authStrategy: new LocalAuth(),
     puppeteer: { args: ['--no-sandbox', '--disable-setuid-sandbox'] }
-});
-
-client.on('qr', qr => {
-    qrcode.generate(qr, {small: true});
-    console.log('SCAN HII QR KWA WHATSAPP YA BIASHARA')
 });
 
 client.on('ready', () => {
@@ -30,18 +24,22 @@ Tuma "BOOK" kupanga`);
     }
     if (text == 'hi' || text == 'habari') {
         msg.reply(`Karibu Double Touchez 📸🔥
-Tuma "BEI" kuona bei zetu
-Tuma "BOOK" kupanga shoot`);
-    }
-    if (text == 'book') {
-        msg.reply(`Poa! Niambie: 
-1. Aina ya shoot
-2. Tarehe unayotaka
-Mfano: BOOK WEDDING 25/08/2026`);
+Tuma "BEI" kuona bei zetu`);
     }
 });
 
-app.get("/", (req, res) => res.send("Double Touchez Bot iko hai!"));
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+app.get("/", (req, res) => res.send("Bot iko hai!"));
+app.listen(PORT);
 
 client.initialize();
+
+// HII NDIO INATOA PAIRING CODE
+client.on('auth_failure', msg => console.log('AUTH FAILED', msg));
+client.on('disconnected', reason => console.log('DISCONNECTED', reason));
+
+setTimeout(async () => {
+    if (!client.info) {
+        const code = await client.requestPairingCode('2557XXXXXXXX'); // WEKA NAMBA YAKO HAPA
+        console.log('PAIRING CODE YAKO NI: ', code);
+    }
+}, 5000);
